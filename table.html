@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script type='text/javascript' src='http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js'></script>
+    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js'></script>
+    <script type='text/javascript'>
+
+    $(function() {
+
+      Contact = Backbone.Model.extend({
+        defaults: {
+          first_name: "John",
+          last_name: "Smith",
+          address: "123 Main St"
+        }
+      }); 
+
+      Contacts = Backbone.Collection.extend({
+        model: Contact
+      });
+
+      var contacts = new Contacts;
+
+      ContactRow = Backbone.View.extend({
+        initialize: function() {
+          _.bindAll(this, "render");
+          this.template = _.template($("#contact-row").html());
+        },
+
+        //every backbone view has a tagName. the default tagName is 'div'
+        //we're changing it to a table row
+        tagName: 'tr',
+
+        render: function() {
+          console.log('row', this.el)
+          $(this.el).html(this.template(this.model.toJSON()));
+          return this;
+        }
+      }); 
+
+      ContactsView = Backbone.View.extend({        
+        el: $('table#me'),
+
+        initialize: function() {
+          _.bindAll(this, "render");
+          this.headerTemplate = $("#contacts-table-header").html();
+          this.collection.bind("add", this.renderContact, this);
+        },
+
+        //the ContactsView element will be a table
+
+        render: function() {
+          console.log(this.el);
+          this.el.html(this.headerTemplate);
+
+          this.collection.each(function(contact) {
+            this.renderContact(contact);
+          }, this);
+
+          return this;
+        },
+
+        renderContact: function(contact) {
+          console.log(this.el, $(this.el));
+          var contactView = new ContactRow({ model: contact });
+          this.el.append(contactView.render().el);
+        }
+      });
+
+
+        //only need to render the ContactsView once
+      var view = new ContactsView;
+
+      //adding a contact to the contacts list when the
+      //button is clicked
+      $("#add-contact").click(function() {
+        contacts.add(new Contact());
+      });
+    });
+
+    </script>
+
+    <script type='text/template' id='contact-row'>
+      <td><%= first_name %></td>
+      <td><%= last_name %></td>
+      <td><%= address %></td>
+    </script>
+  </head>
+  <body>
+    <button id="add-contact">Add Contact</button>
+    <table id="me">
+          <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Address</th>
+      </thead>
+    </table>
+  </body>
+</html>

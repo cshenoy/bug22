@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Bug-22</title>
+    <link href="css/bugger.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="js/libs/json2.js"></script>
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/underscore.min.js"></script>
+    <script src="js/libs/backbone.min.js"></script>
+    <script src="js/libs/backbone-localstorage.js"></script>
+    <script src="js/app.js"></script>
+
+  </head>
+
+  <body>
+
+    <div id="bugger">
+
+      <div class="title">
+        <h1>Bug-22</h1>
+      </div>
+
+      <div class="content">
+
+        <div id="create-bug">
+          <input id="new-bug" placeholder="Write the Bug" type="text" />
+          <span class="ui-tooltip-top" style="display:none;">Press Enter to save this task</span>
+        </div>
+
+        <div id="todos">
+          <table id="bug-list">
+            <tr>
+              <th>Ticket</th>
+              <th>Summary</th>
+              <th>Status</th>
+            </tr>
+          </table>
+        </div>
+
+        <div id="todo-stats"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Templates -->
+
+    <script type="text/template" id="item-template">
+        
+          <td><div class="bug-id"></div></td>
+          <td><div class="bug-summary"></div></td>
+          <!--<td><div class="bug-desc"></div></td>-->
+          <td><div class="status"></td>
+            <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+          </div></td>
+        
+        <div class="edit">
+          <input class="todo-input" type="text" value="" />
+        </div>
+    </script>
+
+    <script type="text/template" id="stats-template">
+      <% if (total) { %>
+        <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? 'bug' : 'bugs' %></span> left.
+        </span>
+      <% } %>
+    </script>
+
+
+  </body>
+</html>
