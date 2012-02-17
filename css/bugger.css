@@ -390,6 +390,7 @@ header {
         color: #777777; }
       #bugs-open .bug-clear .bug-clear a:hover {
         color: #336699; }
+<<<<<<< HEAD
 
 #instructions {
   width: 520px;
@@ -506,3 +507,5 @@ header {
   -moz-transform: rotate(180deg);
   -khtml-transform: rotate(180deg);
   -webkit-transform: rotate(180deg); }
+=======
+>>>>>>> master
